@@ -1,0 +1,77 @@
+{
+    "version": 8,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 28,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "base_msvc_config",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "environment": {
+                "CONAN_HOME": "${sourceDir}/.conan_local_cache"
+            },
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl",
+                "BUILD_TESTING": "ON"
+            }
+        },
+        {
+            "name": "msvc_release",
+            "inherits": "base_msvc_config",
+            "displayName": "MSVC release configuration",
+            "description": "This build is for release builds on Windows with MSVC",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "msvc_debug",
+            "inherits": "base_msvc_config",
+            "displayName": "MSVC debug configuration",
+            "description": "This build is for debug builds on Windows with MSVC",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "msvc_release",
+            "displayName": "MSVC release build",
+            "configurePreset": "msvc_release"
+        },
+        {
+            "name": "msvc_debug",
+            "displayName": "MSVC debug build",
+            "configurePreset": "msvc_debug"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "msvc_release",
+            "displayName": "MSVC release test",
+            "configurePreset": "msvc_release",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "msvc_debug",
+            "displayName": "MSVC debug test",
+            "configurePreset": "msvc_debug",
+            "output": {
+                "outputOnFailure": true
+            }
+        }
+    ]
+}
