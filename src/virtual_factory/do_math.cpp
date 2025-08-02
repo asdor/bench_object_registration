@@ -1,6 +1,8 @@
 #include "virtual_factory/do_math.hpp"
 
+#include <format>
 #include <memory>
+#include <stdexcept>
 
 namespace
 {
@@ -69,7 +71,7 @@ namespace
       else if (i_operation == "div")
         return std::make_unique<DivisionOperation>();
       else
-        return nullptr;
+        throw std::invalid_argument(std::format("Unknown operation: {}", i_operation));
     }
   };
 }

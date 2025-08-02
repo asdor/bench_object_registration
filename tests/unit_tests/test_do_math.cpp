@@ -3,6 +3,7 @@
 #include <virtual_factory/do_math.hpp>
 
 #include <functional>
+#include <stdexcept>
 
 #include <gtest/gtest.h>
 
@@ -36,6 +37,12 @@ TEST_P(DoMathTest, DoDivision)
 {
   const auto f = GetParam();
   EXPECT_EQ(f("div", 1444, 19), 76);
+}
+
+TEST_P(DoMathTest, UnknownOperation)
+{
+  const auto f = GetParam();
+  EXPECT_THROW(f("unknown_op", 1, 2), std::invalid_argument);
 }
 
 INSTANTIATE_TEST_SUITE_P(DoMathTestSuite,

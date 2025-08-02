@@ -1,5 +1,7 @@
 #include "compile_time_by_variant/do_math.hpp"
 
+#include <format>
+#include <stdexcept>
 #include <string_view>
 #include <variant>
 
@@ -65,6 +67,8 @@ namespace
         d_operation.emplace<MultiplicationOperation>();
       else if (i_operation == "div")
         d_operation.emplace<DivisionOperation>();
+      else
+        throw std::invalid_argument(std::format("Unknown operation: {}", i_operation));
     }
 
     int do_operation(int i_x, int i_y) const
