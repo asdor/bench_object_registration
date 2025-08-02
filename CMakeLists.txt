@@ -10,3 +10,4 @@ target_link_libraries(test_self_registration
     PRIVATE
         compile_time_by_variant-lib
 )
+add_subdirectory(src/naive_by_condition)
