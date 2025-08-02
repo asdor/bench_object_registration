@@ -8,4 +8,6 @@ include(${PROJECT_SOURCE_DIR}/cmake/utils.cmake)
 add_subdirectory(src/compile_time_by_variant)
 add_subdirectory(src/naive_by_condition)
 add_subdirectory(src/virtual_factory)
+
 add_subdirectory(tests/unit_tests)
+add_subdirectory(tests/benchmark)

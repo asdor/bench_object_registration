@@ -7,3 +7,4 @@ class MswprRecipe(ConanFile):
 
     def requirements(self):
         self.requires('gtest/1.16.0')
+        self.requires('benchmark/1.9.4')
