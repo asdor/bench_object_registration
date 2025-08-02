@@ -1,20 +1,40 @@
 #include <compile_time_by_variant/do_math.hpp>
 #include <naive_by_condition/do_math.hpp>
 
+#include <functional>
+
 #include <gtest/gtest.h>
 
-TEST(A, B)
+namespace
 {
-  EXPECT_EQ(bench::do_math_naive("add", 5, 8), 13);
-  EXPECT_EQ(bench::do_math_naive("sub", 10, 2), 8);
-  EXPECT_EQ(bench::do_math_naive("mul", 87, 42), 3654);
-  EXPECT_EQ(bench::do_math_naive("div", 1444, 19), 76);
+  using DoMathSignature = std::function<int(std::string_view, int, int)>;
+  class DoMathTest : public testing::TestWithParam<DoMathSignature>
+  {
+  };
 }
 
-TEST(A, C)
+TEST_P(DoMathTest, DoAddition)
 {
-  EXPECT_EQ(bench::do_math_by_variant("add", 5, 8), 13);
-  EXPECT_EQ(bench::do_math_by_variant("sub", 10, 2), 8);
-  EXPECT_EQ(bench::do_math_by_variant("mul", 87, 42), 3654);
-  EXPECT_EQ(bench::do_math_by_variant("div", 1444, 19), 76);
+  const auto f = GetParam();
+  EXPECT_EQ(f("add", 5, 8), 13);
 }
+
+TEST_P(DoMathTest, DoSubtraction)
+{
+  const auto f = GetParam();
+  EXPECT_EQ(f("sub", 10, 2), 8);
+}
+
+TEST_P(DoMathTest, DoMultiplication)
+{
+  const auto f = GetParam();
+  EXPECT_EQ(f("mul", 87, 42), 3654);
+}
+
+TEST_P(DoMathTest, DoDivision)
+{
+  const auto f = GetParam();
+  EXPECT_EQ(f("div", 1444, 19), 76);
+}
+
+INSTANTIATE_TEST_SUITE_P(DoMathTestSuite, DoMathTest, testing::Values(bench::do_math_naive, bench::do_math_by_variant));
