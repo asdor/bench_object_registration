@@ -17,6 +17,7 @@ target_link_libraries(${PROJECT_NAME}-test
         gtest::gtest
         naive_by_condition-lib
         compile_time_by_variant-lib
+        virtual_factory-lib
 )
 
 gtest_discover_tests(${PROJECT_NAME}-test)

@@ -1,5 +1,6 @@
 #include <compile_time_by_variant/do_math.hpp>
 #include <naive_by_condition/do_math.hpp>
+#include <virtual_factory/do_math.hpp>
 
 #include <functional>
 
@@ -37,4 +38,8 @@ TEST_P(DoMathTest, DoDivision)
   EXPECT_EQ(f("div", 1444, 19), 76);
 }
 
-INSTANTIATE_TEST_SUITE_P(DoMathTestSuite, DoMathTest, testing::Values(bench::do_math_naive, bench::do_math_by_variant));
+INSTANTIATE_TEST_SUITE_P(DoMathTestSuite,
+                         DoMathTest,
+                         testing::Values(bench::do_math_naive,
+                                         bench::do_math_by_variant,
+                                         bench::do_math_virtual_factory));

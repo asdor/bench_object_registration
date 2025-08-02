@@ -5,4 +5,5 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(src/compile_time_by_variant)
 add_subdirectory(src/naive_by_condition)
+add_subdirectory(src/virtual_factory)
 add_subdirectory(tests/unit_tests)
