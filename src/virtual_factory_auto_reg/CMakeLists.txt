@@ -1,0 +1,1 @@
+add_library_for_bench(virtual_factory_auto_reg)

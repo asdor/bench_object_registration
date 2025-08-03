@@ -12,4 +12,5 @@ target_link_libraries(${PROJECT_NAME}-bench
         naive_by_condition-lib
         compile_time_by_variant-lib
         virtual_factory-lib
+        virtual_factory_auto_reg-lib
 )

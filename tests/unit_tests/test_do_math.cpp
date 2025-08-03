@@ -1,6 +1,7 @@
 #include <compile_time_by_variant/do_math.hpp>
 #include <naive_by_condition/do_math.hpp>
 #include <virtual_factory/do_math.hpp>
+#include <virtual_factory_auto_reg/do_math.hpp>
 
 #include <functional>
 #include <stdexcept>
@@ -49,4 +50,5 @@ INSTANTIATE_TEST_SUITE_P(DoMathTestSuite,
                          DoMathTest,
                          testing::Values(bench::do_math_naive,
                                          bench::do_math_by_variant,
-                                         bench::do_math_virtual_factory));
+                                         bench::do_math_virtual_factory,
+                                         bench::do_math_virtual_factory_auto_reg));
