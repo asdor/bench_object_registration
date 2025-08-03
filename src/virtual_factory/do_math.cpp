@@ -16,46 +16,38 @@ namespace
   class AdditionOperation : public OperationInterface
   {
   public:
-    int do_operation(int i_x, int i_y) const override;
+    int do_operation(int i_x, int i_y) const override
+    {
+      return i_x + i_y;
+    }
   };
 
   class SubtractionOperation : public OperationInterface
   {
   public:
-    int do_operation(int i_x, int i_y) const override;
+    int do_operation(int i_x, int i_y) const override
+    {
+      return i_x - i_y;
+    }
   };
 
   class MultiplicationOperation : public OperationInterface
   {
   public:
-    int do_operation(int i_x, int i_y) const override;
+    int do_operation(int i_x, int i_y) const override
+    {
+      return i_x * i_y;
+    }
   };
 
   class DivisionOperation : public OperationInterface
   {
   public:
-    int do_operation(int i_x, int i_y) const override;
+    int do_operation(int i_x, int i_y) const override
+    {
+      return i_x / i_y;
+    }
   };
-
-  int AdditionOperation::do_operation(int i_x, int i_y) const
-  {
-    return i_x + i_y;
-  }
-
-  int SubtractionOperation::do_operation(int i_x, int i_y) const
-  {
-    return i_x - i_y;
-  }
-
-  int MultiplicationOperation::do_operation(int i_x, int i_y) const
-  {
-    return i_x * i_y;
-  }
-
-  int DivisionOperation::do_operation(int i_x, int i_y) const
-  {
-    return i_x / i_y;
-  }
 
   class OperationFactory
   {
