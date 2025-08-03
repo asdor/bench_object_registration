@@ -1,4 +1,4 @@
-#include "virtual_factory_auto_reg/do_math.hpp"
+#include "virtual_factory_self_reg/do_math.hpp"
 
 #include <format>
 #include <memory>
