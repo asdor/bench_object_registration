@@ -1,0 +1,1 @@
+add_library_for_bench(compile_time_by_variant_self_reg)

@@ -11,6 +11,7 @@ target_link_libraries(${PROJECT_NAME}-bench
         benchmark::benchmark_main
         naive_by_condition-lib
         compile_time_by_variant-lib
+        compile_time_by_variant_self_reg-lib
         virtual_factory-lib
         virtual_factory_self_reg-lib
 )
