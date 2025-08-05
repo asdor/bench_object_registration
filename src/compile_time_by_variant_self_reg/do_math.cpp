@@ -1,5 +1,6 @@
 #include "compile_time_by_variant/do_math.hpp"
 
+#include <algorithm>
 #include <array>
 #include <format>
 #include <functional>
@@ -70,12 +71,12 @@ namespace
 
     static constexpr operations_t from_string(std::string_view i_operation_name)
     {
-      for (const auto [op_name, make_func] : d_table)
-      {
-        if (i_operation_name == op_name)
-          return make_func();
-      }
-      throw std::invalid_argument(std::format("Unknown operation: {}", i_operation_name));
+      auto it = std::find_if(
+        d_table.begin(), d_table.end(), [i_operation_name](const auto& el) { return el.first == i_operation_name; });
+      if (it == d_table.end())
+        throw std::invalid_argument(std::format("Unknown operation: {}", i_operation_name));
+      else
+        return it->second();
     }
 
   private:
