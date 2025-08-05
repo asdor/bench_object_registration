@@ -54,7 +54,7 @@ namespace
 
 BENCHMARK_CAPTURE(bench_do_math, naive_test, bench::do_math_naive);
 BENCHMARK_CAPTURE(bench_do_math, variant_test, bench::do_math_by_variant);
-BENCHMARK_CAPTURE(bench_do_math, variant_self_reg_test, bench::do_math_by_variant_try);
+BENCHMARK_CAPTURE(bench_do_math, variant_self_reg_test, bench::do_math_by_variant_self_reg);
 BENCHMARK_CAPTURE(bench_do_math, factory_test, bench::do_math_virtual_factory);
 BENCHMARK_CAPTURE(bench_do_math, factory_auto_reg_test, bench::do_math_virtual_factory_auto_reg);
 

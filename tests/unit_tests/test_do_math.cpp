@@ -51,6 +51,6 @@ INSTANTIATE_TEST_SUITE_P(DoMathTestSuite,
                          DoMathTest,
                          testing::Values(bench::do_math_naive,
                                          bench::do_math_by_variant,
-                                         bench::do_math_by_variant_try,
+                                         bench::do_math_by_variant_self_reg,
                                          bench::do_math_virtual_factory,
                                          bench::do_math_virtual_factory_auto_reg));

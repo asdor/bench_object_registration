@@ -1,5 +1,6 @@
 #include "compile_time_by_variant/do_math.hpp"
 
+#include <array>
 #include <format>
 #include <functional>
 #include <stdexcept>
@@ -14,7 +15,7 @@ namespace
   public:
     int do_operation(int i_x, int i_y) const;
 
-    static bool is_registered_in_factory;
+    static constexpr std::string_view operation_name = "add";
   };
 
   class SubtractionOperation
@@ -22,7 +23,7 @@ namespace
   public:
     int do_operation(int i_x, int i_y) const;
 
-    static bool is_registered_in_factory;
+    static constexpr std::string_view operation_name = "sub";
   };
 
   class MultiplicationOperation
@@ -30,7 +31,7 @@ namespace
   public:
     int do_operation(int i_x, int i_y) const;
 
-    static bool is_registered_in_factory;
+    static constexpr std::string_view operation_name = "mul";
   };
 
   class DivisionOperation
@@ -38,7 +39,7 @@ namespace
   public:
     int do_operation(int i_x, int i_y) const;
 
-    static bool is_registered_in_factory;
+    static constexpr std::string_view operation_name = "div";
   };
 
   int AdditionOperation::do_operation(int i_x, int i_y) const
@@ -61,72 +62,44 @@ namespace
     return i_x / i_y;
   }
 
-  using operations_t =
-    std::variant<AdditionOperation, SubtractionOperation, MultiplicationOperation, DivisionOperation>;
-
-  class Registry
+  template<class... Ts>
+  class VariantFactory
   {
   public:
-    static Registry& instance()
+    using operations_t = std::variant<Ts...>;
+
+    static constexpr operations_t from_string(std::string_view i_operation_name)
     {
-      static Registry registry;
-      return registry;
+      for (const auto [op_name, make_func] : d_table)
+      {
+        if (i_operation_name == op_name)
+          return make_func();
+      }
+      throw std::invalid_argument(std::format("Unknown operation: {}", i_operation_name));
     }
 
-    void set_operation(std::string_view i_operation_name, operations_t& i_operation) const
-    {
-      if (auto it = d_map.find(i_operation_name); it != d_map.end())
-      {
-        auto f = it->second;
-        f(i_operation);
-      }
-      else
-        throw std::invalid_argument(std::format("Unknown operation: {}", i_operation_name));
-    }
+  private:
+    using make_t = operations_t (*)();
 
     template<class T>
-    bool registrate(std::string_view i_operation_name)
+    static constexpr operations_t make()
     {
-      d_map[i_operation_name] = [](operations_t& i_operation) { i_operation.emplace<T>(); };
-      return true;
+      return T{};
     }
-
-  private:
-    std::unordered_map<std::string_view, std::function<void(operations_t&)>> d_map;
+    static inline constinit std::array<std::pair<std::string_view, make_t>, sizeof...(Ts)> d_table = {
+      { { Ts::operation_name, &make<Ts> }... }
+    };
   };
 
-  class OperationManager
-  {
-  private:
-    operations_t d_operation;
-
-  public:
-    void set_operation(std::string_view i_operation)
-    {
-      Registry::instance().set_operation(i_operation, d_operation);
-    }
-
-    int do_operation(int i_x, int i_y) const
-    {
-      return std::visit([i_x, i_y](const auto& i_op) { return i_op.do_operation(i_x, i_y); }, d_operation);
-    }
-  };
-
-  bool AdditionOperation::is_registered_in_factory = Registry::instance().registrate<AdditionOperation>("add");
-  bool SubtractionOperation::is_registered_in_factory = Registry::instance().registrate<SubtractionOperation>("sub");
-  bool MultiplicationOperation::is_registered_in_factory =
-    Registry::instance().registrate<MultiplicationOperation>("mul");
-  bool DivisionOperation::is_registered_in_factory = Registry::instance().registrate<DivisionOperation>("div");
+  using variant_factory_t =
+    VariantFactory<AdditionOperation, SubtractionOperation, MultiplicationOperation, DivisionOperation>;
 }
 
 namespace bench
 {
-
-  int do_math_by_variant_try(std::string_view i_operation, int i_x, int i_y)
+  int do_math_by_variant_self_reg(std::string_view i_operation, int i_x, int i_y)
   {
-    OperationManager manager;
-    manager.set_operation(i_operation);
-
-    return manager.do_operation(i_x, i_y);
+    auto x = variant_factory_t::from_string(i_operation);
+    return std::visit([i_x, i_y](const auto& i_op) { return i_op.do_operation(i_x, i_y); }, x);
   }
 }

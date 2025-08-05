@@ -4,5 +4,5 @@
 
 namespace bench
 {
-  int do_math_by_variant_try(std::string_view i_operation, int i_x, int i_y);
+  int do_math_by_variant_self_reg(std::string_view i_operation, int i_x, int i_y);
 }
