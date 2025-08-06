@@ -44,6 +44,114 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
+        },
+        {
+            "name": "base_unix_config",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "environment": {
+                "CONAN_HOME": "${sourceDir}/.conan_local_cache"
+            },
+            "cacheVariables": {
+                "CONAN_COMMAND": "${sourceDir}/.venv/bin/conan",
+                "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "${sourceDir}/cmake/conan_provider.cmake"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+                    "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
+                }
+            }
+        },
+        {
+            "name": "base_gcc_config",
+            "inherits": "base_unix_config",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            },
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "linux-gcc-x64",
+                    "hostOS": [
+                        "Linux"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "base_clang_config",
+            "inherits": "base_unix_config",
+            "hidden": true,
+            "condition": {
+                "type": "anyOf",
+                "conditions": [
+                    {
+                        "type": "equals",
+                        "lhs": "${hostSystemName}",
+                        "rhs": "Linux"
+                    },
+                    {
+                        "type": "equals",
+                        "lhs": "${hostSystemName}",
+                        "rhs": "Darwin"
+                    }
+                ]
+            },
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "hostOS": [
+                        "Linux",
+                        "macOS"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "gcc_release",
+            "inherits": "base_gcc_config",
+            "displayName": "GCC release configuration",
+            "description": "This build is for release builds on Linux with GCC",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "gcc_debug",
+            "inherits": "base_gcc_config",
+            "displayName": "GCC debug configuration",
+            "description": "This build is for debug builds on Linux with GCC",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "clang_release",
+            "inherits": "base_clang_config",
+            "displayName": "Clang release configuration",
+            "description": "This build is for release builds on Linux or macOS with Clang",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "clang_debug",
+            "inherits": "base_clang_config",
+            "displayName": "Clang debug configuration",
+            "description": "This build is for debug builds on Linux or macOS with Clang",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
         }
     ],
     "buildPresets": [
@@ -56,6 +164,26 @@
             "name": "msvc_debug",
             "displayName": "MSVC debug build",
             "configurePreset": "msvc_debug"
+        },
+        {
+            "name": "gcc_release",
+            "displayName": "GCC release build",
+            "configurePreset": "gcc_release"
+        },
+        {
+            "name": "gcc_debug",
+            "displayName": "GCC debug build",
+            "configurePreset": "gcc_debug"
+        },
+        {
+            "name": "clang_release",
+            "displayName": "Clang release build",
+            "configurePreset": "clang_release"
+        },
+        {
+            "name": "clang_debug",
+            "displayName": "Clang debug build",
+            "configurePreset": "clang_debug"
         }
     ],
     "testPresets": [
@@ -71,6 +199,38 @@
             "name": "msvc_debug",
             "displayName": "MSVC debug test",
             "configurePreset": "msvc_debug",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "gcc_release",
+            "displayName": "GCC release test",
+            "configurePreset": "gcc_release",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "gcc_debug",
+            "displayName": "GCC debug test",
+            "configurePreset": "gcc_debug",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "clang_release",
+            "displayName": "Clang release test",
+            "configurePreset": "clang_release",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "clang_debug",
+            "displayName": "Clang debug test",
+            "configurePreset": "clang_debug",
             "output": {
                 "outputOnFailure": true
             }
