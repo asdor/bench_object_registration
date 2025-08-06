@@ -22,4 +22,4 @@ target_link_libraries(${PROJECT_NAME}-test
         virtual_factory_self_reg-lib
 )
 
-gtest_discover_tests(${PROJECT_NAME}-test)
+gtest_discover_tests(${PROJECT_NAME}-test NO_PRETTY_VALUES)
