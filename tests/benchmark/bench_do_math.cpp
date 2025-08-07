@@ -1,4 +1,5 @@
 #include <compile_time_by_variant/do_math.hpp>
+#include <compile_time_by_variant_factory/do_math.hpp>
 #include <compile_time_by_variant_self_reg/do_math.hpp>
 #include <naive_by_condition/do_math.hpp>
 #include <virtual_factory/do_math.hpp>
@@ -54,6 +55,7 @@ namespace
 
 BENCHMARK_CAPTURE(bench_do_math, naive_test, bench::do_math_naive);
 BENCHMARK_CAPTURE(bench_do_math, variant_test, bench::do_math_by_variant);
+BENCHMARK_CAPTURE(bench_do_math, variant_factory_test, bench::do_math_by_variant_factory);
 BENCHMARK_CAPTURE(bench_do_math, variant_self_reg_test, bench::do_math_by_variant_self_reg);
 BENCHMARK_CAPTURE(bench_do_math, factory_test, bench::do_math_virtual_factory);
 BENCHMARK_CAPTURE(bench_do_math, factory_auto_reg_test, bench::do_math_virtual_factory_auto_reg);
