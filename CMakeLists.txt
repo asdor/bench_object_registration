@@ -3,7 +3,13 @@ project(bench_object_registration VERSION 0.0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 
+option(BENCH_ENABLE_LTO "Enable LTO" ON)
+
 include(${PROJECT_SOURCE_DIR}/cmake/utils.cmake)
+if (BENCH_ENABLE_LTO)
+    include(${PROJECT_SOURCE_DIR}/cmake/lto_support.cmake)
+    enable_ipo_for_bench()
+endif()
 
 add_subdirectory(src/compile_time_by_variant)
 add_subdirectory(src/compile_time_by_variant_factory)
