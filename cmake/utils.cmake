@@ -15,7 +15,7 @@ function(add_library_for_bench lib_name)
 
     target_compile_options(${_CURRENT_LIB_NAME} PUBLIC
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:
-        -Wall -Wextra -Wpedantic -Werror>
+        -Wall -Wextra -Wpedantic -Werror -march=native>
         $<$<CXX_COMPILER_ID:MSVC>:
         /W4 /WX>
     )
