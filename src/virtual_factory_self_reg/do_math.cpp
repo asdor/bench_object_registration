@@ -54,7 +54,7 @@ namespace
       Registry::instance().registrate("add", std::make_unique<AdditionOperation>());
   };
 
-  class SubtractionOperation : public OperationInterface
+  class SubtractionOperation final : public OperationInterface
   {
   public:
     int do_operation(int i_x, int i_y) const override
@@ -66,7 +66,7 @@ namespace
       Registry::instance().registrate("sub", std::make_unique<SubtractionOperation>());
   };
 
-  class MultiplicationOperation : public OperationInterface
+  class MultiplicationOperation final : public OperationInterface
   {
   public:
     int do_operation(int i_x, int i_y) const override
@@ -78,7 +78,7 @@ namespace
       Registry::instance().registrate("mul", std::make_unique<MultiplicationOperation>());
   };
 
-  class DivisionOperation : public OperationInterface
+  class DivisionOperation final : public OperationInterface
   {
   public:
     int do_operation(int i_x, int i_y) const override

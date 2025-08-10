@@ -13,7 +13,7 @@ namespace
     virtual int do_operation(int i_x, int i_y) const = 0;
   };
 
-  class AdditionOperation : public OperationInterface
+  class AdditionOperation final : public OperationInterface
   {
   public:
     int do_operation(int i_x, int i_y) const override
@@ -22,7 +22,7 @@ namespace
     }
   };
 
-  class SubtractionOperation : public OperationInterface
+  class SubtractionOperation final : public OperationInterface
   {
   public:
     int do_operation(int i_x, int i_y) const override
@@ -31,7 +31,7 @@ namespace
     }
   };
 
-  class MultiplicationOperation : public OperationInterface
+  class MultiplicationOperation final : public OperationInterface
   {
   public:
     int do_operation(int i_x, int i_y) const override
@@ -40,7 +40,7 @@ namespace
     }
   };
 
-  class DivisionOperation : public OperationInterface
+  class DivisionOperation final : public OperationInterface
   {
   public:
     int do_operation(int i_x, int i_y) const override
